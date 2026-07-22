@@ -1,0 +1,96 @@
+import { loadData, findParticipantByEmail } from './data.js';
+import { getStoredEmail, setStoredEmail, clearStoredEmail, renderLoginCombobox } from './auth.js';
+
+const root = document.getElementById('app');
+
+async function start() {
+  let data;
+  try {
+    data = await loadData();
+  } catch (err) {
+    root.innerHTML = `<div class="login"><p class="login__error">Nie udało się wczytać danych wyjazdu. Spróbuj odświeżyć stronę lub napisz do organizatora.</p></div>`;
+    console.error(err);
+    return;
+  }
+
+  const storedEmail = getStoredEmail();
+  const storedParticipant = storedEmail ? findParticipantByEmail(data, storedEmail) : null;
+
+  if (storedParticipant) {
+    renderApp(data, storedParticipant);
+  } else {
+    if (storedEmail && !storedParticipant) clearStoredEmail();
+    renderLogin(data);
+  }
+}
+
+function renderLogin(data, notice) {
+  root.innerHTML = `
+    <div class="login">
+      <img class="login__logo" src="./assets/Forte-logo_bg-cream.svg" alt="Forte" />
+      <h1 class="login__title">${data.settings.eventName ?? 'Forte Trip'}</h1>
+      <p class="login__subtitle">Wybierz siebie z listy, aby zobaczyć swój plan wyjazdu.</p>
+      ${notice ? `<p class="login__error">${notice}</p>` : ''}
+      <div class="combobox" id="login-combobox"></div>
+      <p class="login__help">Nie widzisz siebie na liście? Napisz do organizatora: ${formatOrganizers(data.settings.organizers)}</p>
+    </div>
+  `;
+
+  renderLoginCombobox(document.getElementById('login-combobox'), data.participants, (participant) => {
+    setStoredEmail(participant.email);
+    renderApp(data, participant);
+  });
+}
+
+function formatOrganizers(organizers = []) {
+  return organizers.map((o) => `${o.name} (${o.phone})`).join(', ');
+}
+
+function renderApp(data, participant) {
+  root.innerHTML = `
+    <header class="topbar">
+      <span class="topbar__title">${data.settings.eventName ?? 'Forte Trip'}</span>
+      <button class="button-ghost" id="logout-btn">Wyloguj (${participant.label})</button>
+    </header>
+    <main class="view" id="view-content"></main>
+    <nav class="bottom-nav" aria-label="Główna nawigacja">
+      <button class="bottom-nav__item" data-view="agenda" aria-current="page">
+        <span class="bottom-nav__icon" aria-hidden="true">📅</span>Agenda
+      </button>
+      <button class="bottom-nav__item" data-view="my-activities">
+        <span class="bottom-nav__icon" aria-hidden="true">⭐</span>Moje aktywności
+      </button>
+      <button class="bottom-nav__item" data-view="info">
+        <span class="bottom-nav__icon" aria-hidden="true">ℹ️</span>Informacje
+      </button>
+    </nav>
+  `;
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    clearStoredEmail();
+    renderLogin(data);
+  });
+
+  const navButtons = root.querySelectorAll('.bottom-nav__item');
+  navButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      navButtons.forEach((b) => b.removeAttribute('aria-current'));
+      btn.setAttribute('aria-current', 'page');
+      renderView(btn.dataset.view, data, participant);
+    });
+  });
+
+  renderView('agenda', data, participant);
+}
+
+function renderView(view, data, participant) {
+  const content = document.getElementById('view-content');
+  const placeholders = {
+    agenda: `<h2>Agenda</h2><div class="placeholder-card">Pełna agenda wyjazdu pojawi się tutaj w kolejnym etapie.</div>`,
+    'my-activities': `<h2>Moje aktywności</h2><div class="placeholder-card">Cześć, ${participant.label.split(' ')[0]}! Twoje aktywności pojawią się tutaj w kolejnym etapie.</div>`,
+    info: `<h2>Informacje</h2><div class="placeholder-card">Informacje organizacyjne pojawią się tutaj w kolejnym etapie.</div>`,
+  };
+  content.innerHTML = placeholders[view] ?? '';
+}
+
+start();

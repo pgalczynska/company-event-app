@@ -1,0 +1,39 @@
+:root {
+  /* Forte brand colors (brandpad.io/forte) */
+  --color-plum: #39344b;
+  --color-cream: #f2f0e7;
+  --color-burgundy: #511e29;
+  --color-dark-burgundy: #3d0e18;
+  --color-dark-plum: #221c38;
+  --color-highlight: #ff6a3d;
+  --color-ash-grey: #d6dddc;
+  --color-cookie-dough: #ede6c3;
+  --color-harbour-mist: #bbc6c5;
+
+  /* Semantic tokens — jasny motyw */
+  --color-bg: var(--color-cream);
+  --color-bg-alt: var(--color-ash-grey);
+  --color-text: var(--color-plum);
+  --color-text-strong: var(--color-burgundy);
+  --color-accent: var(--color-highlight);
+  --color-accent-text: var(--color-cream);
+  --color-border: var(--color-harbour-mist);
+
+  /* Typografia: Aptos/Volk Sans z brandbooka nie mają dostarczonych
+     plików webfont, więc fallback do fontów systemowych o podobnym charakterze. */
+  --font-body: "Aptos", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-heading: "Volk Sans", "Aptos", "Segoe UI", -apple-system, system-ui, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+
+  --nav-height: 64px;
+  --focus-ring: 3px solid var(--color-highlight);
+}

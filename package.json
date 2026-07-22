@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build-data": "node scripts/build-data.js"
+    "build-data": "node scripts/build-data.js",
+    "build": "node scripts/build-data.js && node scripts/copy-assets.js"
   },
   "devDependencies": {
     "exceljs": "^4.4.0"

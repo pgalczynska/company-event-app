@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SOURCE_PATH = path.join(__dirname, '..', 'data', 'Event_Data.xlsx');
-const OUTPUT_DIR = path.join(__dirname, '..', 'data', 'generated');
+const OUTPUT_DIR = path.join(__dirname, '..', 'src', 'data');
 
 const DAY_ORDER = ['piątek', 'sobota', 'niedziela'];
 

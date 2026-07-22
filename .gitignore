@@ -1,3 +1,4 @@
 .DS_Store
 node_modules/
-data/generated/
+src/data/
+src/assets/
