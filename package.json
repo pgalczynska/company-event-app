@@ -1,0 +1,11 @@
+{
+  "name": "forte-trip",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-data": "node scripts/build-data.js"
+  },
+  "devDependencies": {
+    "exceljs": "^4.4.0"
+  }
+}
