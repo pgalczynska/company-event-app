@@ -74,8 +74,8 @@ button {
 .button-ghost {
   background: none;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
   font-size: 0.9rem;
 }
 
@@ -83,7 +83,7 @@ button {
   background: var(--color-text-strong);
   color: var(--color-cream);
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-pill);
   padding: var(--space-3) var(--space-4);
   font-size: 1rem;
   font-weight: 600;
@@ -265,7 +265,7 @@ button {
   flex: none;
   background: #fff;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: var(--space-2) var(--space-4);
   font-size: 0.9rem;
   font-weight: 600;
@@ -349,7 +349,7 @@ button {
   font-size: 0.7rem;
   font-weight: 600;
   padding: 2px 8px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--color-bg-alt);
   white-space: nowrap;
 }
@@ -359,8 +359,10 @@ button {
 }
 
 .event-card__badge--indywidualne {
+  /* Highlight + cream tekst dawał kontrast 2.49:1 (poniżej 4.5:1 wymaganych
+     dla tekstu) — Burgundy na Highlight daje 4.71:1. */
   background: var(--color-highlight);
-  color: var(--color-cream);
+  color: var(--color-text-strong);
 }
 
 /* --- Informacje --- */

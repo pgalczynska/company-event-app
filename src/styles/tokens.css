@@ -19,10 +19,11 @@
   --color-accent-text: var(--color-cream);
   --color-border: var(--color-harbour-mist);
 
-  /* Aptos (Microsoft) nie jest dołączony do repo — patrz README. Przeglądarka
-     użyje go, jeśli jest zainstalowany lokalnie, w przeciwnym razie Inter/system-ui. */
+  /* Aptos i Volk Sans (fortedigital.com używa Volk Sans na nagłówkach) nie są
+     dołączone do repo — patrz README. Przeglądarka użyje ich, jeśli są
+     zainstalowane lokalnie, w przeciwnym razie Inter/system-ui. */
   --font-body: Aptos, Inter, system-ui, sans-serif;
-  --font-heading: Aptos, Inter, system-ui, sans-serif;
+  --font-heading: "Volk Sans", Aptos, Inter, system-ui, sans-serif;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -33,7 +34,12 @@
 
   --radius: 14px;
   --radius-sm: 8px;
+  /* fortedigital.com używa w pełni zaokrąglonych, "pill" przycisków. */
+  --radius-pill: 999px;
 
   --nav-height: 64px;
-  --focus-ring: 3px solid var(--color-highlight);
+  /* Highlight (#FF6A3D) ma kontrast tylko 2.49:1 na Cream — poniżej wymaganych
+     3:1 dla wskaźników niebędących tekstem (WCAG 1.4.11), więc do focusu
+     używamy Burgundy (kontrast ~11:1 na Cream i na białych kartach). */
+  --focus-ring: 3px solid var(--color-text-strong);
 }
