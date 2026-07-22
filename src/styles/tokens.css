@@ -19,10 +19,10 @@
   --color-accent-text: var(--color-cream);
   --color-border: var(--color-harbour-mist);
 
-  /* Typografia: Aptos/Volk Sans z brandbooka nie mają dostarczonych
-     plików webfont, więc fallback do fontów systemowych o podobnym charakterze. */
-  --font-body: "Aptos", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-heading: "Volk Sans", "Aptos", "Segoe UI", -apple-system, system-ui, sans-serif;
+  /* Aptos (Microsoft) nie jest dołączony do repo — patrz README. Przeglądarka
+     użyje go, jeśli jest zainstalowany lokalnie, w przeciwnym razie Inter/system-ui. */
+  --font-body: Aptos, Inter, system-ui, sans-serif;
+  --font-heading: Aptos, Inter, system-ui, sans-serif;
 
   --space-1: 4px;
   --space-2: 8px;
