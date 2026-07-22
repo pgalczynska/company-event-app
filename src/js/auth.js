@@ -13,8 +13,9 @@ export function clearStoredEmail() {
 }
 
 /**
- * Renders an accessible searchable combobox (ARIA combobox pattern) into `container`.
- * Calls onSelect(participant) when the user picks someone from the list.
+ * Renders an accessible searchable combobox (ARIA combobox pattern) into `container`,
+ * plus a confirm button. Calls onSelect(participant) only once the user picks someone
+ * from the list AND confirms with the button (prevents accidental login while typing).
  */
 export function renderLoginCombobox(container, participants, onSelect) {
   container.innerHTML = `
@@ -30,12 +31,19 @@ export function renderLoginCombobox(container, participants, onSelect) {
       autocomplete="off"
     />
     <ul class="combobox__list hidden" role="listbox" id="participant-listbox"></ul>
+    <button class="button-primary login__submit-btn" type="button" id="login-submit-btn" disabled>Jazda</button>
   `;
 
   const input = container.querySelector('.combobox__input');
   const list = container.querySelector('.combobox__list');
+  const submitBtn = container.querySelector('#login-submit-btn');
   let matches = [];
   let activeIndex = -1;
+
+  function setSelectedParticipant(participant) {
+    submitBtn.disabled = !participant;
+    submitBtn.dataset.email = participant?.email ?? '';
+  }
 
   function closeList() {
     list.classList.add('hidden');
@@ -46,7 +54,7 @@ export function renderLoginCombobox(container, participants, onSelect) {
 
   function renderMatches(query) {
     const q = query.trim().toLowerCase();
-    matches = q ? participants.filter((p) => p.label?.toLowerCase().includes(q)) : [];
+    matches = q ? participants.filter((p) => p.label?.toLowerCase().startsWith(q)) : [];
     activeIndex = -1;
 
     if (!q) {
@@ -84,10 +92,13 @@ export function renderLoginCombobox(container, participants, onSelect) {
     if (!participant) return;
     input.value = participant.label;
     closeList();
-    onSelect(participant);
+    setSelectedParticipant(participant);
   }
 
-  input.addEventListener('input', () => renderMatches(input.value));
+  input.addEventListener('input', () => {
+    setSelectedParticipant(null);
+    renderMatches(input.value);
+  });
 
   input.addEventListener('keydown', (e) => {
     if (list.classList.contains('hidden') && e.key !== 'ArrowDown') return;
@@ -114,5 +125,10 @@ export function renderLoginCombobox(container, participants, onSelect) {
 
   document.addEventListener('click', (e) => {
     if (!container.contains(e.target)) closeList();
+  });
+
+  submitBtn.addEventListener('click', () => {
+    const participant = participants.find((p) => p.email === submitBtn.dataset.email);
+    if (participant) onSelect(participant);
   });
 }

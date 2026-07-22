@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "build-data": "node scripts/build-data.js",
-    "build": "node scripts/build-data.js && node scripts/copy-assets.js"
+    "build": "node scripts/build-data.js && node scripts/copy-assets.js && node scripts/generate-icons.js"
   },
   "devDependencies": {
-    "exceljs": "^4.4.0"
+    "exceljs": "^4.4.0",
+    "sharp": "^0.35.3"
   }
 }

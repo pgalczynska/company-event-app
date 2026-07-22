@@ -20,7 +20,8 @@ function individualSlotToEvent(slot, activitiesByCode) {
   };
 }
 
-export function renderMyActivities(container, data, participant) {
+/** Wydarzenia wspólne/grupowe przypisane uczestnikowi + jego indywidualne terminy. */
+export function getMyEvents(data, participant) {
   const myCodes = new Set([...participant.common, ...participant.group]);
   const agendaEvents = data.agenda.filter((e) => myCodes.has(e.activityCode));
 
@@ -29,7 +30,11 @@ export function renderMyActivities(container, data, participant) {
     .filter((s) => s.email === participant.email)
     .map((s) => individualSlotToEvent(s, activitiesByCode));
 
-  renderEventList(container, [...agendaEvents, ...mySlots], {
+  return [...agendaEvents, ...mySlots];
+}
+
+export function renderMyActivities(container, data, participant) {
+  renderEventList(container, getMyEvents(data, participant), {
     emptyMessage: 'Nie masz jeszcze przypisanych aktywności.',
   });
 }

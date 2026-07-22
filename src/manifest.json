@@ -1,0 +1,17 @@
+{
+  "name": "Forte Trip",
+  "short_name": "Forte Trip",
+  "description": "Aplikacja na firmowy wyjazd integracyjny Forte",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f0e7",
+  "theme_color": "#39344b",
+  "lang": "pl",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

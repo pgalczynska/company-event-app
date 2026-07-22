@@ -79,6 +79,42 @@ button {
   font-size: 0.9rem;
 }
 
+.button-primary {
+  background: var(--color-text-strong);
+  color: var(--color-cream);
+  border: none;
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.button-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.notif-banner {
+  margin: 0 var(--space-4) var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-cookie-dough);
+  border: 1px solid var(--color-highlight);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.notif-banner__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.notif-banner__actions .button-ghost {
+  background: #fff;
+}
+
 .bottom-nav {
   position: fixed;
   left: 0;
@@ -170,6 +206,11 @@ button {
 .combobox__option {
   padding: var(--space-3);
   border-radius: var(--radius-sm);
+}
+
+.login__submit-btn {
+  width: 100%;
+  margin-top: var(--space-3);
 }
 
 .combobox__option[aria-selected="true"],

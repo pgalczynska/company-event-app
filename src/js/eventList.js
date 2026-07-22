@@ -96,10 +96,20 @@ export function renderEventList(container, events, { emptyMessage } = {}) {
   `;
 
   const target = resolveTargetDay(days);
+  const tabButtons = container.querySelectorAll('.day-tabs__item');
 
-  container.querySelectorAll('.day-tabs__item').forEach((btn) => {
-    if (btn.dataset.day === target) btn.setAttribute('aria-current', 'true');
+  const setActiveTab = (day) => {
+    tabButtons.forEach((btn) => {
+      if (btn.dataset.day === day) btn.setAttribute('aria-current', 'true');
+      else btn.removeAttribute('aria-current');
+    });
+  };
+
+  setActiveTab(target);
+
+  tabButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
+      setActiveTab(btn.dataset.day);
       document.getElementById(`day-${btn.dataset.day}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });

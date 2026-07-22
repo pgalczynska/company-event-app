@@ -1,3 +1,5 @@
+import { sendTestNotification } from './notifications.js';
+
 function telHref(phone) {
   return `tel:${phone.replace(/[^\d+]/g, '')}`;
 }
@@ -81,8 +83,28 @@ export function renderInfo(container, data) {
     `);
   }
 
+  // TYMCZASOWE (do usunięcia w Etapie 6) — do ręcznego testowania powiadomień bez czekania do września.
+  cards.push(`
+    <div class="info-card" style="border-style: dashed;">
+      <h3 class="info-card__title">🧪 Test powiadomień (tymczasowe)</h3>
+      <p>Sprawdź, czy Twoja przeglądarka pokaże prawdziwe powiadomienie systemowe.</p>
+      <button class="button-ghost" id="test-notif-btn">Wyślij testowe powiadomienie (za 10s)</button>
+      <p id="test-notif-status"></p>
+    </div>
+  `);
+
   container.innerHTML =
     cards.length > 0
       ? cards.join('')
       : `<div class="placeholder-card">Informacje organizacyjne pojawią się tutaj, gdy organizatorzy je uzupełnią.</div>`;
+
+  const testBtn = document.getElementById('test-notif-btn');
+  const testStatus = document.getElementById('test-notif-status');
+  testBtn?.addEventListener('click', async () => {
+    testStatus.textContent = 'Wysyłanie prośby o zgodę (jeśli potrzebna)…';
+    const ok = await sendTestNotification();
+    testStatus.textContent = ok
+      ? 'Zaplanowano! Zminimalizuj kartę i poczekaj ~10 sekund.'
+      : 'Brak zgody na powiadomienia w przeglądarce.';
+  });
 }
