@@ -197,7 +197,7 @@ button {
   opacity: 0.8;
 }
 
-/* --- Placeholder content (etap 2) --- */
+/* --- Placeholder content --- */
 
 .placeholder-card {
   background: #fff;
@@ -205,4 +205,173 @@ button {
   border-radius: var(--radius);
   padding: var(--space-4);
   margin-top: var(--space-3);
+}
+
+/* --- Event list (Agenda / Moje aktywności) --- */
+
+.day-tabs {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding: var(--space-1) 0 var(--space-3);
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  z-index: 1;
+}
+
+.day-tabs__item {
+  flex: none;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.day-tabs__item[aria-current="true"] {
+  background: var(--color-text-strong);
+  border-color: var(--color-text-strong);
+  color: var(--color-cream);
+}
+
+.day-section {
+  margin-top: var(--space-2);
+  scroll-margin-top: 60px;
+}
+
+.day-section__title {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-3);
+}
+
+.event-card-list {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.event-card {
+  display: flex;
+  gap: var(--space-3);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+}
+
+.event-card__time {
+  flex: none;
+  width: 84px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding-top: 2px;
+}
+
+.event-card__next-day {
+  display: block;
+  font-weight: 400;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.event-card__header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.event-card__title {
+  font-size: 1rem;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.event-card__location {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.event-card__description {
+  font-size: 0.9rem;
+  margin: var(--space-1) 0 0;
+  opacity: 0.9;
+}
+
+.event-card__badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--color-bg-alt);
+  white-space: nowrap;
+}
+
+.event-card__badge--grupowe {
+  background: var(--color-cookie-dough);
+}
+
+.event-card__badge--indywidualne {
+  background: var(--color-highlight);
+  color: var(--color-cream);
+}
+
+/* --- Informacje --- */
+
+.info-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.info-card p {
+  margin: var(--space-1) 0;
+}
+
+.info-card__title {
+  margin-bottom: var(--space-2);
+}
+
+.info-card--highlight {
+  background: var(--color-cookie-dough);
+  border-color: var(--color-highlight);
+}
+
+.contact-row-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-row:active {
+  background: var(--color-cookie-dough);
+}
+
+.contact-row__value {
+  font-weight: 400;
+  opacity: 0.85;
 }

@@ -1,5 +1,8 @@
 import { loadData, findParticipantByEmail } from './data.js';
 import { getStoredEmail, setStoredEmail, clearStoredEmail, renderLoginCombobox } from './auth.js';
+import { renderAgenda } from './agenda.js';
+import { renderMyActivities } from './myActivities.js';
+import { renderInfo } from './info.js';
 
 const root = document.getElementById('app');
 
@@ -85,12 +88,17 @@ function renderApp(data, participant) {
 
 function renderView(view, data, participant) {
   const content = document.getElementById('view-content');
-  const placeholders = {
-    agenda: `<h2>Agenda</h2><div class="placeholder-card">Pełna agenda wyjazdu pojawi się tutaj w kolejnym etapie.</div>`,
-    'my-activities': `<h2>Moje aktywności</h2><div class="placeholder-card">Cześć, ${participant.label.split(' ')[0]}! Twoje aktywności pojawią się tutaj w kolejnym etapie.</div>`,
-    info: `<h2>Informacje</h2><div class="placeholder-card">Informacje organizacyjne pojawią się tutaj w kolejnym etapie.</div>`,
-  };
-  content.innerHTML = placeholders[view] ?? '';
+
+  if (view === 'agenda') {
+    content.innerHTML = `<h2>Agenda</h2><div id="agenda-list"></div>`;
+    renderAgenda(document.getElementById('agenda-list'), data);
+  } else if (view === 'my-activities') {
+    content.innerHTML = `<h2>Moje aktywności</h2><div id="my-activities-list"></div>`;
+    renderMyActivities(document.getElementById('my-activities-list'), data, participant);
+  } else if (view === 'info') {
+    content.innerHTML = `<h2>Informacje</h2><div id="info-content"></div>`;
+    renderInfo(document.getElementById('info-content'), data);
+  }
 }
 
 start();

@@ -141,6 +141,10 @@ async function main() {
       receptionPhone: settingsMap['Telefon recepcja'] ?? null,
       spaPhone: settingsMap['Telefon spa'] ?? null,
     },
+    // Opcjonalne — nie ma ich jeszcze w Excelu; jeśli organizator doda taki wiersz
+    // w zakładce Ustawienia, appka podejmie go bez zmian w kodzie.
+    wifiPassword: settingsMap['Hasło WiFi'] ?? settingsMap['WiFi'] ?? null,
+    announcements: settingsMap['Ważne komunikaty'] ?? null,
   };
 
   // --- Aktywności ---
