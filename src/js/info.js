@@ -79,6 +79,7 @@ export function renderInfo(container, data) {
         <div class="contact-row-list">
           ${organizers.map((o) => contactRow({ href: telHref(o.phone), label: o.name.split(' ')[0], value: o.phone })).join('')}
         </div>
+        <p class="info-card__note">Prosimy o kontakt tylko w razie nagłych sytuacji.</p>
       </div>
     `);
   }

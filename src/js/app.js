@@ -38,11 +38,11 @@ function renderLogin(data, notice) {
   root.innerHTML = `
     <div class="login">
       <img class="login__logo" src="./assets/Forte-logo_bg-cream.svg" alt="Forte" />
-      <h1 class="login__title">${data.settings.eventName ?? 'Forte Trip'}</h1>
-      <p class="login__subtitle">Wybierz siebie z listy, aby zobaczyć swój plan wyjazdu.</p>
+      <h1 class="login__title">${data.settings.eventName ?? 'Szczawnica 2026'}</h1>
+      <p class="login__subtitle">Dołącz do wyjazdu</p>
       ${notice ? `<p class="login__error">${notice}</p>` : ''}
       <div class="combobox" id="login-combobox"></div>
-      <p class="login__help">Nie widzisz siebie na liście? Napisz do organizatora: ${formatOrganizers(data.settings.organizers)}</p>
+      <p class="login__help">Nie widzisz siebie na liście? Skontaktuj się z Anią lub Kasią</p>
     </div>
   `;
 
@@ -52,14 +52,10 @@ function renderLogin(data, notice) {
   });
 }
 
-function formatOrganizers(organizers = []) {
-  return organizers.map((o) => `${o.name} (${o.phone})`).join(', ');
-}
-
 function renderApp(data, participant) {
   root.innerHTML = `
     <header class="topbar">
-      <span class="topbar__title">${data.settings.eventName ?? 'Forte Trip'}</span>
+      <img class="topbar__logo" src="./assets/Forte-logo_bg-cream.svg" alt="Forte" />
       <button class="button-ghost" id="logout-btn">Wyloguj (${participant.label})</button>
     </header>
     <div id="notif-banner"></div>
