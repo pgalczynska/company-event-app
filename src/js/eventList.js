@@ -1,11 +1,11 @@
-const DAY_LABELS = {
-  0: 'Nd',
-  1: 'Pn',
-  2: 'Wt',
-  3: 'Śr',
-  4: 'Cz',
-  5: 'Pt',
-  6: 'So',
+const DAY_NAMES = {
+  0: 'niedziela',
+  1: 'poniedziałek',
+  2: 'wtorek',
+  3: 'środa',
+  4: 'czwartek',
+  5: 'piątek',
+  6: 'sobota',
 };
 
 const TYPE_LABELS = {
@@ -22,10 +22,24 @@ function todayISO() {
   return `${y}-${m}-${day}`;
 }
 
-function dayLabel(dateISO) {
+function dayName(dateISO) {
   const d = new Date(`${dateISO}T00:00:00`);
+  return DAY_NAMES[d.getDay()];
+}
+
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// Zakładka dnia: samo imię dnia, np. "piątek".
+function dayTabLabel(dateISO) {
+  return dayName(dateISO);
+}
+
+// Nagłówek sekcji: imię dnia z wielkiej litery + data, np. "Piątek 11.09".
+function dayHeadingLabel(dateISO) {
   const [, m, day] = dateISO.split('-');
-  return `${DAY_LABELS[d.getDay()]} ${day}.${m}`;
+  return `${capitalize(dayName(dateISO))} ${day}.${m}`;
 }
 
 function resolveTargetDay(days) {
@@ -73,7 +87,7 @@ export function renderEventList(container, events, { emptyMessage } = {}) {
   const days = [...new Set(sorted.map((e) => e.date))].sort();
 
   const dayTabs = days
-    .map((date) => `<button class="day-tabs__item" data-day="${date}">${dayLabel(date)}</button>`)
+    .map((date) => `<button class="day-tabs__item" data-day="${date}">${dayTabLabel(date)}</button>`)
     .join('');
 
   const sections = days
@@ -81,7 +95,7 @@ export function renderEventList(container, events, { emptyMessage } = {}) {
       const dayEvents = sorted.filter((e) => e.date === date);
       return `
         <section class="day-section" id="day-${date}">
-          <h2 class="day-section__title">${dayLabel(date)}</h2>
+          <h2 class="day-section__title">${dayHeadingLabel(date)}</h2>
           <ul class="event-card-list">
             ${dayEvents.map(eventCard).join('')}
           </ul>
