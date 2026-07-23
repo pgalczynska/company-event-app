@@ -140,6 +140,7 @@ function initNotifications(data, participant) {
 
 function renderView(view, data, participant) {
   const content = document.getElementById('view-content');
+  window.scrollTo(0, 0);
 
   if (view === 'agenda') {
     content.innerHTML = `<h2>Agenda</h2><div id="agenda-list"></div>`;
