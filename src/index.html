@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      // Ustawiamy zapisany motyw jak najwcześniej, zanim cokolwiek się wyrenderuje —
+      // inaczej byłby widoczny krótki błysk złego motywu (domyślny jasny -> ciemny).
+      try {
+        var forteTheme = localStorage.getItem('forteTrip.theme');
+        if (forteTheme) document.documentElement.setAttribute('data-theme', forteTheme);
+      } catch (e) {}
+    </script>
     <title>Forte Trip</title>
     <meta name="description" content="Aplikacja na firmowy wyjazd integracyjny Forte Trip" />
     <meta name="theme-color" content="#39344b" />

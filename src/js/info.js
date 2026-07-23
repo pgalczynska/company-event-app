@@ -1,4 +1,5 @@
 import { sendTestNotification } from './notifications.js';
+import { getEffectiveTheme, setTheme } from './theme.js';
 
 function telHref(phone) {
   return `tel:${phone.replace(/[^\d+]/g, '')}`;
@@ -84,6 +85,20 @@ export function renderInfo(container, data) {
     `);
   }
 
+  const isDark = getEffectiveTheme() === 'dark';
+  cards.push(`
+    <div class="info-card">
+      <h3 class="info-card__title">🌗 Wygląd</h3>
+      <label class="theme-toggle-row" for="theme-toggle-input">
+        <span>Tryb ciemny</span>
+        <span class="theme-toggle">
+          <input type="checkbox" id="theme-toggle-input" role="switch" ${isDark ? 'checked' : ''} />
+          <span class="theme-toggle__track"><span class="theme-toggle__thumb"></span></span>
+        </span>
+      </label>
+    </div>
+  `);
+
   // TYMCZASOWE (do usunięcia w Etapie 6) — do ręcznego testowania powiadomień bez czekania do września.
   cards.push(`
     <div class="info-card" style="border-style: dashed;">
@@ -107,5 +122,9 @@ export function renderInfo(container, data) {
     testStatus.textContent = ok
       ? 'Zaplanowano! Zminimalizuj kartę i poczekaj ~10 sekund.'
       : 'Brak zgody na powiadomienia w przeglądarce.';
+  });
+
+  document.getElementById('theme-toggle-input')?.addEventListener('change', (e) => {
+    setTheme(e.target.checked ? 'dark' : 'light');
   });
 }

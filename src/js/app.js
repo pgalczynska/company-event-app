@@ -7,6 +7,16 @@ import { getPermission, requestPermission, scheduleReminders, keepRemindersSched
 
 const NOTIF_DISMISSED_KEY = 'forteTrip.notifBannerDismissed';
 
+// Logo ma jednokolorowe, przezroczyste tło — na jasnym tle strony potrzebny jest
+// wariant z fioletowymi literami, na ciemnym z kremowymi. Oba renderowane, CSS
+// (tokens.css/main.css) pokazuje właściwy w zależności od motywu.
+function forteLogo(className) {
+  return `
+    <img class="${className} ${className}--light" src="./assets/Forte-logo_bg-cream.svg" alt="Forte" />
+    <img class="${className} ${className}--dark" src="./assets/Forte-logo_bg-plum.svg" alt="" aria-hidden="true" />
+  `;
+}
+
 const root = document.getElementById('app');
 
 if ('serviceWorker' in navigator) {
@@ -37,10 +47,10 @@ async function start() {
 function renderLogin(data, notice) {
   root.innerHTML = `
     <div class="login">
-      <img class="login__logo" src="./assets/Forte-logo_bg-cream.svg" alt="Forte" />
+      ${forteLogo('login__logo')}
       <h1 class="login__title">${data.settings.eventName ?? 'Szczawnica 2026'}</h1>
-      <p class="login__subtitle">Dołącz do wyjazdu</p>
       ${notice ? `<p class="login__error">${notice}</p>` : ''}
+      <p class="login__subtitle">Dołącz do wyjazdu</p>
       <div class="combobox" id="login-combobox"></div>
       <p class="login__help">Nie widzisz siebie na liście? Skontaktuj się z Anią lub Kasią</p>
     </div>
@@ -55,20 +65,20 @@ function renderLogin(data, notice) {
 function renderApp(data, participant) {
   root.innerHTML = `
     <header class="topbar">
-      <img class="topbar__logo" src="./assets/Forte-logo_bg-cream.svg" alt="Forte" />
+      ${forteLogo('topbar__logo')}
       <button class="button-ghost" id="logout-btn">Wyloguj (${participant.label})</button>
     </header>
     <div id="notif-banner"></div>
     <main class="view" id="view-content"></main>
     <nav class="bottom-nav" aria-label="Główna nawigacja">
       <button class="bottom-nav__item" data-view="agenda" aria-current="page">
-        <span class="bottom-nav__icon" aria-hidden="true">📅</span>Agenda
+        <span class="bottom-nav__icon bottom-nav__icon--agenda" aria-hidden="true"></span>Agenda
       </button>
       <button class="bottom-nav__item" data-view="my-activities">
-        <span class="bottom-nav__icon" aria-hidden="true">⭐</span>Moje aktywności
+        <span class="bottom-nav__icon bottom-nav__icon--my-activities" aria-hidden="true"></span>Moje aktywności
       </button>
       <button class="bottom-nav__item" data-view="info">
-        <span class="bottom-nav__icon" aria-hidden="true">ℹ️</span>Informacje
+        <span class="bottom-nav__icon bottom-nav__icon--info" aria-hidden="true"></span>Informacje
       </button>
     </nav>
   `;

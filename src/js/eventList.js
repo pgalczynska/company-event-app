@@ -10,8 +10,15 @@ const DAY_NAMES = {
 
 const TYPE_LABELS = {
   wspólne: 'Wspólne',
-  grupowe: 'Grupowe',
+  'dla zapisanych': 'Dla zapisanych',
   indywidualne: 'Indywidualne',
+};
+
+// Nazwa CSS klasy nie może zawierać spacji — "dla zapisanych" -> "dla-zapisanych".
+const TYPE_CLASS_SLUGS = {
+  wspólne: 'wspolne',
+  'dla zapisanych': 'dla-zapisanych',
+  indywidualne: 'indywidualne',
 };
 
 function todayISO() {
@@ -53,8 +60,9 @@ function eventCard(event) {
   const timeRange = event.crossesMidnight
     ? `${event.start}–${event.end} <span class="event-card__next-day">(następny dzień)</span>`
     : `${event.start}–${event.end}`;
+  const typeSlug = TYPE_CLASS_SLUGS[event.type] ?? event.type;
   const typeBadge = event.type
-    ? `<span class="event-card__badge event-card__badge--${event.type}">${TYPE_LABELS[event.type] ?? event.type}</span>`
+    ? `<span class="event-card__badge event-card__badge--${typeSlug}">${TYPE_LABELS[event.type] ?? event.type}</span>`
     : '';
 
   return `

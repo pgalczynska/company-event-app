@@ -10,14 +10,22 @@
   --color-cookie-dough: #ede6c3;
   --color-harbour-mist: #bbc6c5;
 
-  /* Semantic tokens — jasny motyw */
+  /* Semantic tokens — jasny motyw (domyślny) */
   --color-bg: var(--color-cream);
+  --color-surface: #ffffff;
   --color-bg-alt: var(--color-ash-grey);
   --color-text: var(--color-plum);
   --color-text-strong: var(--color-burgundy);
   --color-accent: var(--color-highlight);
   --color-accent-text: var(--color-cream);
   --color-border: var(--color-harbour-mist);
+
+  /* Wypełnienie "markowe" (przycisk Jazda, aktywna zakładka dnia, włączony toggle).
+     Burgundy na Burgundy/DarkPlum tle dark motywu ma kontrast ~1.2:1 (niewidoczne!),
+     więc w dark mode zamieniamy je na Highlight (kontrast >4:1 na obu ciemnych tłach). */
+  --color-brand-fill: var(--color-burgundy);
+  --color-brand-fill-text: var(--color-cream);
+  --color-toggle-thumb: #ffffff;
 
   /* Aptos i Volk Sans (fortedigital.com używa Volk Sans na nagłówkach) nie są
      dołączone do repo — patrz README. Przeglądarka użyje ich, jeśli są
@@ -42,4 +50,39 @@
      3:1 dla wskaźników niebędących tekstem (WCAG 1.4.11), więc do focusu
      używamy Burgundy (kontrast ~11:1 na Cream i na białych kartach). */
   --focus-ring: 3px solid var(--color-text-strong);
+}
+
+/* Ciemny motyw: domyślnie wg ustawień przeglądarki/systemu (prefers-color-scheme),
+   a [data-theme] na <html> (ustawiane przez toggle w Informacjach, zapisane w
+   localStorage) wygrywa w obie strony, gdy użytkownik wybierze ręcznie. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: var(--color-dark-plum);
+    --color-surface: var(--color-plum);
+    --color-text: var(--color-ash-grey);
+    --color-text-strong: var(--color-cream);
+    --color-brand-fill: var(--color-highlight);
+    --color-brand-fill-text: var(--color-burgundy);
+    --color-toggle-thumb: var(--color-dark-plum);
+  }
+}
+
+:root[data-theme='dark'] {
+  --color-bg: var(--color-dark-plum);
+  --color-surface: var(--color-plum);
+  --color-text: var(--color-ash-grey);
+  --color-text-strong: var(--color-cream);
+  --color-brand-fill: var(--color-highlight);
+  --color-brand-fill-text: var(--color-burgundy);
+  --color-toggle-thumb: var(--color-dark-plum);
+}
+
+:root[data-theme='light'] {
+  --color-bg: var(--color-cream);
+  --color-surface: #ffffff;
+  --color-text: var(--color-plum);
+  --color-text-strong: var(--color-burgundy);
+  --color-brand-fill: var(--color-burgundy);
+  --color-brand-fill-text: var(--color-cream);
+  --color-toggle-thumb: #ffffff;
 }

@@ -135,6 +135,49 @@ button {
   height: 24px;
 }
 
+/* Logo ma jednokolorowe przezroczyste tło — wariant "--dark" (kremowe litery)
+   pokazujemy tylko w ciemnym motywie, inaczej litery zlewałyby się z tłem. */
+.login__logo--light,
+.topbar__logo--light {
+  display: block;
+}
+
+.login__logo--dark,
+.topbar__logo--dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .login__logo--light,
+  .topbar__logo--light {
+    display: none;
+  }
+  .login__logo--dark,
+  .topbar__logo--dark {
+    display: block;
+  }
+}
+
+:root[data-theme='dark'] .login__logo--light,
+:root[data-theme='dark'] .topbar__logo--light {
+  display: none;
+}
+
+:root[data-theme='dark'] .login__logo--dark,
+:root[data-theme='dark'] .topbar__logo--dark {
+  display: block;
+}
+
+:root[data-theme='light'] .login__logo--light,
+:root[data-theme='light'] .topbar__logo--light {
+  display: block;
+}
+
+:root[data-theme='light'] .login__logo--dark,
+:root[data-theme='light'] .topbar__logo--dark {
+  display: none;
+}
+
 .button-ghost {
   background: none;
   border: 1px solid var(--color-border);
@@ -144,8 +187,11 @@ button {
 }
 
 .button-primary {
-  background: var(--color-text-strong);
-  color: var(--color-cream);
+  /* --color-brand-fill (nie --color-burgundy wprost) — w dark mode Burgundy
+     ma kontrast ~1.2:1 na ciemnym tle (niewidoczne), więc zamienia się na
+     Highlight; tekst --color-brand-fill-text dobiera się do tego automatycznie. */
+  background: var(--color-brand-fill);
+  color: var(--color-brand-fill-text);
   border: none;
   border-radius: var(--radius-pill);
   padding: var(--space-3) var(--space-4);
@@ -162,6 +208,9 @@ button {
   margin: 0 var(--space-4) var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--color-cookie-dough);
+  /* Tło stałe (nie zależy od motywu) — tekst też musi być stały, inaczej w
+     dark mode dziedziczyłby jasny --color-text i byłby nieczytelny. */
+  color: var(--color-plum);
   border: 1px solid var(--color-highlight);
   border-radius: var(--radius);
   font-size: 0.9rem;
@@ -176,7 +225,11 @@ button {
 }
 
 .notif-banner__actions .button-ghost {
-  background: #fff;
+  /* Baner jest zawsze jasny (cookie-dough) niezależnie od motywu, więc jego
+     przycisk też musi zostać jasny — nie var(--color-surface), które w dark
+     mode stałoby się ciemne i zlałoby się z wymuszonym ciemnym tekstem. */
+  background: #ffffff;
+  border-color: var(--color-highlight);
 }
 
 .bottom-nav {
@@ -214,7 +267,30 @@ button {
 }
 
 .bottom-nav__icon {
-  font-size: 1.25rem;
+  width: 24px;
+  height: 24px;
+  background-color: currentColor;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.bottom-nav__icon--agenda {
+  -webkit-mask-image: url('../assets/CalendarDots.svg');
+  mask-image: url('../assets/CalendarDots.svg');
+}
+
+.bottom-nav__icon--my-activities {
+  -webkit-mask-image: url('../assets/ListStar.svg');
+  mask-image: url('../assets/ListStar.svg');
+}
+
+.bottom-nav__icon--info {
+  -webkit-mask-image: url('../assets/Info.svg');
+  mask-image: url('../assets/Info.svg');
 }
 
 /* --- Login --- */
@@ -229,9 +305,9 @@ button {
 }
 
 .login__logo {
-  width: 96px;
+  width: 140px;
   margin: 0 auto var(--space-3);
-  display: block;
+  /* display ustawiane przez modyfikator --light/--dark (patrz niżej) */
 }
 
 .login__title {
@@ -240,9 +316,10 @@ button {
 }
 
 .login__subtitle {
-  text-align: center;
-  margin: 0 0 var(--space-4);
+  text-align: left;
+  margin: var(--space-4) 0 var(--space-2);
   opacity: 0.85;
+  font-weight: 600;
 }
 
 .combobox {
@@ -254,7 +331,7 @@ button {
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius);
   border: 1px solid var(--color-border);
-  background: #fff;
+  background: var(--color-surface);
   font-size: 1rem;
 }
 
@@ -262,7 +339,7 @@ button {
   list-style: none;
   margin: var(--space-2) 0 0;
   padding: var(--space-1);
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   max-height: 45vh;
@@ -282,6 +359,7 @@ button {
 .combobox__option[aria-selected="true"],
 .combobox__option:hover {
   background: var(--color-cookie-dough);
+  color: var(--color-plum);
 }
 
 .combobox__empty {
@@ -292,6 +370,7 @@ button {
 
 .login__error {
   background: var(--color-cookie-dough);
+  color: var(--color-plum);
   border: 1px solid var(--color-highlight);
   border-radius: var(--radius);
   padding: var(--space-3);
@@ -307,7 +386,7 @@ button {
 /* --- Placeholder content --- */
 
 .placeholder-card {
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-4);
@@ -329,7 +408,7 @@ button {
 
 .day-tabs__item {
   flex: none;
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
   padding: var(--space-2) var(--space-4);
@@ -338,9 +417,10 @@ button {
 }
 
 .day-tabs__item[aria-current="true"] {
-  background: var(--color-text-strong);
-  border-color: var(--color-text-strong);
-  color: var(--color-cream);
+  /* Jak w .button-primary — --color-brand-fill zamiast na sztywno Burgundy. */
+  background: var(--color-brand-fill);
+  border-color: var(--color-brand-fill);
+  color: var(--color-brand-fill-text);
 }
 
 .day-section {
@@ -365,7 +445,7 @@ button {
 .event-card {
   display: flex;
   gap: var(--space-3);
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-3) var(--space-4);
@@ -417,24 +497,27 @@ button {
   padding: 2px 8px;
   border-radius: var(--radius-pill);
   background: var(--color-bg-alt);
+  /* Tło odznaki jest zawsze jasne (nie zależy od motywu) — tekst zawsze Plum. */
+  color: var(--color-plum);
   white-space: nowrap;
 }
 
-.event-card__badge--grupowe {
+.event-card__badge--dla-zapisanych {
   background: var(--color-cookie-dough);
 }
 
 .event-card__badge--indywidualne {
   /* Highlight + cream tekst dawał kontrast 2.49:1 (poniżej 4.5:1 wymaganych
-     dla tekstu) — Burgundy na Highlight daje 4.71:1. */
+     dla tekstu) — Burgundy na Highlight daje 4.71:1. Tło i tekst tej odznaki
+     nie zależą od motywu (jasny/ciemny). */
   background: var(--color-highlight);
-  color: var(--color-text-strong);
+  color: var(--color-burgundy);
 }
 
 /* --- Informacje --- */
 
 .info-card {
-  background: #fff;
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-4);
@@ -455,8 +538,68 @@ button {
   margin-top: var(--space-3);
 }
 
+.theme-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex: none;
+}
+
+.theme-toggle input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.theme-toggle__track {
+  position: absolute;
+  inset: 0;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+  transition: background 0.15s ease;
+}
+
+.theme-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--color-toggle-thumb);
+  border-radius: 50%;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.theme-toggle input:checked + .theme-toggle__track {
+  background: var(--color-brand-fill);
+}
+
+.theme-toggle input:checked + .theme-toggle__track .theme-toggle__thumb {
+  transform: translateX(20px);
+}
+
+.theme-toggle input:focus-visible + .theme-toggle__track {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
 .info-card--highlight {
   background: var(--color-cookie-dough);
+  color: var(--color-plum);
   border-color: var(--color-highlight);
 }
 
@@ -484,6 +627,7 @@ button {
 
 .contact-row:active {
   background: var(--color-cookie-dough);
+  color: var(--color-plum);
 }
 
 .contact-row__value {
