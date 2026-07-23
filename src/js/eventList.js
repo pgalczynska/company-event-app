@@ -135,6 +135,4 @@ export function renderEventList(container, events, { emptyMessage } = {}) {
       document.getElementById(`day-${btn.dataset.day}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
-
-  document.getElementById(`day-${target}`)?.scrollIntoView({ behavior: 'instant', block: 'start' });
 }
