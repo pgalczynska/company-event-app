@@ -317,7 +317,9 @@ button {
 
 .login__subtitle {
   text-align: left;
-  margin: var(--space-4) 0 var(--space-2);
+  /* Bez marginesu na dole — odstęp do inputu daje już `gap` na .login,
+     dublowanie obu dawało razem ok. 24px, co było za dużo. */
+  margin: var(--space-4) 0 0;
   opacity: 0.85;
   font-weight: 600;
 }
